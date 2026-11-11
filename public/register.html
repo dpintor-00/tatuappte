@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear Cuenta - TatuAppte</title>
+  <meta name="description" content="Regístrate en TatuAppte como Cliente o Tatuador para agendar citas y usar el cotizador 3D." />
+  <link rel="stylesheet" href="/css/tatuappte.css" />
+</head>
+<body class="bg-grid-pattern">
+
+  <main class="auth-wrapper">
+    <div class="auth-container">
+      
+      <!-- Tarjeta Bonitapp -->
+      <div class="bonitapp-card">
+        
+        <!-- Cabecera de Marca -->
+        <header class="brand-header">
+          <div class="brand-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 19 7-7 3 3-7 7-3-3z"/>
+              <path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18"/>
+              <path d="m2 2 7.586 7.586"/>
+              <circle cx="11" cy="11" r="2"/>
+            </svg>
+            <span>TatuAppte Studio</span>
+          </div>
+          <h1 class="brand-title">Crea tu cuenta</h1>
+          <p class="brand-subtitle">Selecciona tu perfil para comenzar a cotizar o gestionar tu estudio.</p>
+        </header>
+
+        <!-- Selector de Rol (Estilo Bonitapp) -->
+        <div class="role-selector" role="radiogroup" aria-label="Tipo de cuenta">
+          <button type="button" class="role-btn active" id="roleCustomerBtn" data-role="customer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span>Cliente</span>
+            <span class="role-desc">Quiero tatuarme</span>
+          </button>
+
+          <button type="button" class="role-btn" id="roleTattooistBtn" data-role="tattooist">
+            <img src="/assets/aistudio/png-clipart-tattoo-machine_391ed3ae.png" alt="Tatuador" style="width: 18px; height: 18px; object-fit: contain; opacity: 0.8;" />
+            <span>Tatuador</span>
+            <span class="role-desc">Gestionar agenda</span>
+          </button>
+        </div>
+
+        <!-- Mensaje de Alerta dinámico -->
+        <div id="alertBox" class="alert-box">
+          <span id="alertIcon"></span>
+          <span id="alertMessage"></span>
+        </div>
+
+        <!-- Formulario de Registro -->
+        <form id="registerForm" autocomplete="on">
+          <input type="hidden" id="selectedRole" name="role" value="customer" />
+
+          <!-- Campo Nombre / Nombre de Estudio -->
+          <div class="form-group">
+            <label for="username" class="form-label" id="usernameLabel">Nombre completo o apodo</label>
+            <div class="input-container">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              <input 
+                type="text" 
+                id="username" 
+                name="username" 
+                class="bonitapp-input" 
+                placeholder="Ej. Alex Valenzuela" 
+                required 
+                autocomplete="name"
+              />
+            </div>
+          </div>
+
+          <!-- Campo Correo Electrónico -->
+          <div class="form-group">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <div class="input-container">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="16" x="2" y="4" rx="2"/>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="bonitapp-input" 
+                placeholder="tu@correo.com" 
+                required 
+                autocomplete="email"
+              />
+            </div>
+          </div>
+
+          <!-- Campo Contraseña -->
+          <div class="form-group">
+            <label for="password" class="form-label">Contraseña</label>
+            <div class="input-container">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                class="bonitapp-input" 
+                placeholder="Mínimo 6 caracteres" 
+                required 
+                minlength="6"
+                autocomplete="new-password"
+              />
+              <button type="button" class="toggle-password" id="togglePasswordBtn" title="Mostrar u ocultar contraseña">
+                <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Campo Confirmar Contraseña -->
+          <div class="form-group">
+            <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+            <div class="input-container">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <input 
+                type="password" 
+                id="confirmPassword" 
+                name="confirmPassword" 
+                class="bonitapp-input" 
+                placeholder="Repite tu contraseña" 
+                required 
+                autocomplete="new-password"
+              />
+            </div>
+          </div>
+
+          <!-- Botón de Registro -->
+          <button type="submit" id="submitBtn" class="btn-primary">
+            <span id="btnText">Registrar mi Cuenta</span>
+            <span id="btnSpinner" class="spinner" style="display: none;"></span>
+          </button>
+        </form>
+
+        <!-- Pie de tarjeta -->
+        <footer class="auth-footer">
+          ¿Ya tienes una cuenta? 
+          <a href="/login" class="auth-link">Inicia sesión</a>
+        </footer>
+
+      </div>
+
+      <!-- Pie de página informativo -->
+      <div class="app-meta-footer">
+        TatuAppte &copy; 2026 &bull; Agendamiento y Cotizador 3D para Estudios
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Selector de Rol
+    const roleCustomerBtn = document.getElementById('roleCustomerBtn');
+    const roleTattooistBtn = document.getElementById('roleTattooistBtn');
+    const selectedRoleInput = document.getElementById('selectedRole');
+    const usernameLabel = document.getElementById('usernameLabel');
+    const usernameInput = document.getElementById('username');
+
+    roleCustomerBtn.addEventListener('click', () => {
+      roleCustomerBtn.classList.add('active');
+      roleTattooistBtn.classList.remove('active');
+      selectedRoleInput.value = 'customer';
+      usernameLabel.textContent = 'Nombre completo o apodo';
+      usernameInput.placeholder = 'Ej. Alex Valenzuela';
+    });
+
+    roleTattooistBtn.addEventListener('click', () => {
+      roleTattooistBtn.classList.add('active');
+      roleCustomerBtn.classList.remove('active');
+      selectedRoleInput.value = 'tattooist';
+      usernameLabel.textContent = 'Nombre artístico o de tu Estudio';
+      usernameInput.placeholder = 'Ej. Dark Ink Studio / Carlos Tattoo';
+    });
+
+    // Toggle visibilidad de contraseña
+    const passwordInput = document.getElementById('password');
+    const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    togglePasswordBtn.addEventListener('click', () => {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      eyeIcon.innerHTML = isPassword
+        ? `<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/>`
+        : `<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>`;
+    });
+
+    // Manejo de Alertas
+    const alertBox = document.getElementById('alertBox');
+    const alertMessage = document.getElementById('alertMessage');
+    const alertIcon = document.getElementById('alertIcon');
+
+    function showAlert(msg, type = 'error') {
+      alertBox.className = `alert-box alert-${type}`;
+      alertMessage.textContent = msg;
+      alertIcon.innerHTML = type === 'error'
+        ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`
+        : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+      alertBox.style.display = 'flex';
+    }
+
+    function hideAlert() {
+      alertBox.style.display = 'none';
+    }
+
+    // Manejo de Registro
+    const form = document.getElementById('registerForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnSpinner = document.getElementById('btnSpinner');
+
+    function setLoading(isLoading) {
+      submitBtn.disabled = isLoading;
+      btnSpinner.style.display = isLoading ? 'inline-block' : 'none';
+      btnText.textContent = isLoading ? 'Creando cuenta...' : 'Registrar mi Cuenta';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const role = selectedRoleInput.value;
+
+      if (!username || !email || !password || !confirmPassword) {
+        showAlert('Por favor completa todos los campos requeridos.');
+        return;
+      }
+
+      if (password.length < 6) {
+        showAlert('La contraseña debe tener al menos 6 caracteres.');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showAlert('Las contraseñas no coinciden. Por favor verifícalas.');
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password, role })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          showAlert(data.error || 'No se pudo crear la cuenta.');
+          setLoading(false);
+          return;
+        }
+
+        showAlert('¡Cuenta creada con éxito! Redirigiendo a inicio de sesión...', 'success');
+        
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 1200);
+
+      } catch (err) {
+        console.error(err);
+        showAlert('No se pudo conectar con el servidor. Revisa tu conexión.');
+        setLoading(false);
+      }
+    });
+  </script>
+</body>
+</html>

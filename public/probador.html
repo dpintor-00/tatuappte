@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Probador 3D & Cotizador - TatuAppte</title>
+  <link rel="stylesheet" href="/css/tatuappte.css" />
+  <style>
+    .probador-shell {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 24px;
+    }
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: #f1f5f9;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body class="bg-grid-pattern">
+  <div class="probador-shell">
+    <div class="bonitapp-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <div class="brand-badge" style="margin-bottom: 0;">
+          <span>TatuAppte &bull; Probador 3D</span>
+        </div>
+        <button id="logoutBtn" class="auth-link" style="background: none; border: none; cursor: pointer; font-size: 14px;">Cerrar sesión</button>
+      </div>
+
+      <div id="userBadge" class="user-pill">
+        <span>Cargando perfil...</span>
+      </div>
+
+      <h1 class="brand-title" style="margin-bottom: 12px;">Módulo Probador 3D & Cotizador en Tiempo Real</h1>
+      <p class="brand-subtitle" style="margin-bottom: 24px;">
+        Módulo preparado para renderizar el lienzo interactivo con Three.js (modelo 3D humanoide, sliders de contextura/estatura, decals proyectadas con textura y cálculo de cotización en pesos chilenos).
+      </p>
+
+      <div style="background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 14px; padding: 40px; text-align: center;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.5" style="margin: 0 auto 16px;">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+          <path d="M2 12h20"/>
+        </svg>
+        <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px; color: #1e293b;">Arquitectura Inicial Lista</h3>
+        <p style="font-size: 14px; color: #64748b; max-width: 520px; margin: 0 auto 20px;">
+          El backend Express, Supabase client y las interfaces de Login/Registro estilo Bonitapp han quedado configuradas correctamente.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 12px;">
+          <a href="/login" class="btn-primary" style="display: inline-flex; width: auto; padding: 0 24px; text-decoration: none;">Volver al Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const userStr = localStorage.getItem('tatuappte_user');
+    const badge = document.getElementById('userBadge');
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        badge.innerHTML = `👤 Conectado como: <strong>${user.username}</strong> (${user.role === 'tattooist' ? 'Tatuador / Estudio' : 'Cliente'}) &bull; ${user.email}`;
+      } catch (e) {
+        badge.textContent = 'Modo invitado';
+      }
+    } else {
+      badge.textContent = 'No has iniciado sesión aún';
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('tatuappte_user');
+      window.location.href = '/login';
+    });
+  </script>
+</body>
+</html>

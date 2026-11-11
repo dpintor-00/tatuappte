@@ -1,0 +1,6 @@
+{
+  "name": "TatuAppte",
+  "description": "Sistema de agendamiento y cotizador 3D para estudios de tatuajes estilo Bonitapp con probador 3D interactivo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
